@@ -1,0 +1,10 @@
+import { Activity, Droplets, Leaf, Thermometer } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PriorityBadge, StatusBadge } from "@/components/shared/status";
+import type { Zone } from "@/types/agriculture";
+
+export function ZoneDetailPanel({ zone, onAction }: { zone: Zone; onAction?: () => void }) {
+  return <section className="panel rounded-lg p-5"><div className="flex items-start justify-between gap-4"><div><div className="flex items-center gap-2"><span className="font-mono text-xs text-muted-foreground">{zone.id}</span><StatusBadge status={zone.status} /></div><h3 className="mt-2 text-lg font-medium">{zone.name}</h3><p className="mt-1 text-xs text-muted-foreground">{zone.crop} · updated {zone.lastUpdated}</p></div><PriorityBadge priority={zone.irrigationPriority} /></div><div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-4 border-y border-border py-4"><Metric label="Crop health" value={`${zone.healthScore}%`} icon={Activity} /><Metric label="NDVI" value={zone.ndvi.toFixed(2)} icon={Leaf} /><Metric label="Soil moisture" value={`${zone.soilMoisture}%`} icon={Droplets} /><Metric label="Water stress" value={zone.waterStress} icon={Thermometer} /></div><div className="mt-4"><p className="text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">Recommendation</p><p className="mt-2 text-sm leading-relaxed">{zone.recommendation}</p><Button size="sm" className="mt-4 w-full" onClick={onAction}>{zone.irrigationPriority === "high" ? "Schedule irrigation" : "Open zone analysis"}</Button></div></section>;
+}
+
+function Metric({ label, value, icon: Icon }: { label: string; value: string; icon: typeof Activity }) { return <div className="flex items-center gap-2"><Icon className="size-3.5 text-muted-foreground" strokeWidth={1.8} /><div><p className="text-[11px] text-muted-foreground">{label}</p><p className="mt-0.5 text-sm font-medium">{value}</p></div></div>; }
