@@ -10,33 +10,127 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AlertsRouteImport } from './routes/alerts'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
+import { Route as CropHealthRouteImport } from './routes/crop-health'
+import { Route as FarmsRouteImport } from './routes/farms'
+import { Route as IrrigationRouteImport } from './routes/irrigation'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as FarmsFarmIdRouteImport } from './routes/farms.$farmId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlertsRoute = AlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CropHealthRoute = CropHealthRouteImport.update({
+  id: '/crop-health',
+  path: '/crop-health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmsRoute = FarmsRouteImport.update({
+  id: '/farms',
+  path: '/farms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IrrigationRoute = IrrigationRouteImport.update({
+  id: '/irrigation',
+  path: '/irrigation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmsFarmIdRoute = FarmsFarmIdRouteImport.update({
+  id: '/$farmId',
+  path: '/$farmId',
+  getParentRoute: () => FarmsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/analytics': typeof AnalyticsRoute
+  '/crop-health': typeof CropHealthRoute
+  '/farms': typeof FarmsRouteWithChildren
+  '/irrigation': typeof IrrigationRoute
+  '/settings': typeof SettingsRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/analytics': typeof AnalyticsRoute
+  '/crop-health': typeof CropHealthRoute
+  '/farms': typeof FarmsRouteWithChildren
+  '/irrigation': typeof IrrigationRoute
+  '/settings': typeof SettingsRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/analytics': typeof AnalyticsRoute
+  '/crop-health': typeof CropHealthRoute
+  '/farms': typeof FarmsRouteWithChildren
+  '/irrigation': typeof IrrigationRoute
+  '/settings': typeof SettingsRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/alerts'
+    | '/analytics'
+    | '/crop-health'
+    | '/farms'
+    | '/irrigation'
+    | '/settings'
+    | '/farms/$farmId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/alerts'
+    | '/analytics'
+    | '/crop-health'
+    | '/farms'
+    | '/irrigation'
+    | '/settings'
+    | '/farms/$farmId'
+  id:
+    | '__root__'
+    | '/'
+    | '/alerts'
+    | '/analytics'
+    | '/crop-health'
+    | '/farms'
+    | '/irrigation'
+    | '/settings'
+    | '/farms/$farmId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlertsRoute: typeof AlertsRoute
+  AnalyticsRoute: typeof AnalyticsRoute
+  CropHealthRoute: typeof CropHealthRoute
+  FarmsRoute: typeof FarmsRouteWithChildren
+  IrrigationRoute: typeof IrrigationRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +142,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alerts': {
+      id: '/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crop-health': {
+      id: '/crop-health'
+      path: '/crop-health'
+      fullPath: '/crop-health'
+      preLoaderRoute: typeof CropHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farms': {
+      id: '/farms'
+      path: '/farms'
+      fullPath: '/farms'
+      preLoaderRoute: typeof FarmsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/irrigation': {
+      id: '/irrigation'
+      path: '/irrigation'
+      fullPath: '/irrigation'
+      preLoaderRoute: typeof IrrigationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farms/$farmId': {
+      id: '/farms/$farmId'
+      path: '/$farmId'
+      fullPath: '/farms/$farmId'
+      preLoaderRoute: typeof FarmsFarmIdRouteImport
+      parentRoute: typeof FarmsRoute
+    }
   }
 }
 
+interface FarmsRouteChildren {
+  FarmsFarmIdRoute: typeof FarmsFarmIdRoute
+}
+
+const FarmsRouteChildren: FarmsRouteChildren = {
+  FarmsFarmIdRoute: FarmsFarmIdRoute,
+}
+
+const FarmsRouteWithChildren = FarmsRoute._addFileChildren(FarmsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlertsRoute: AlertsRoute,
+  AnalyticsRoute: AnalyticsRoute,
+  CropHealthRoute: CropHealthRoute,
+  FarmsRoute: FarmsRouteWithChildren,
+  IrrigationRoute: IrrigationRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

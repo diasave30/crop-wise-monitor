@@ -1,0 +1,6 @@
+import { ArrowRight, Droplets } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PriorityBadge } from "@/components/shared/status";
+import type { Recommendation } from "@/types/agriculture";
+
+export function RecommendationCard({ recommendation, onAction }: { recommendation: Recommendation; onAction?: () => void }) { return <div className="border-b border-border py-5 first:pt-0 last:border-b-0 last:pb-0"><div className="flex items-center justify-between gap-3"><PriorityBadge priority={recommendation.priority} /><span className="font-mono text-[11px] text-muted-foreground">{recommendation.zone}</span></div><h3 className="mt-3 text-sm font-medium">{recommendation.action}</h3><p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{recommendation.reason}</p><Button variant={recommendation.priority === "high" ? "default" : "outline"} size="sm" className="mt-4 w-full" onClick={onAction}>{recommendation.priority === "high" ? <Droplets /> : null}{recommendation.priority === "high" ? "Schedule irrigation" : "Review recommendation"}<ArrowRight /></Button></div>; }
