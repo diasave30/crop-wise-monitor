@@ -1,7 +1,6 @@
 import type { Alert, Farm, Recommendation, Zone } from "@/types/agriculture";
 
-export const farms: Farm[] = [
-  {
+export const primaryFarm: Farm = {
     id: "green-valley",
     name: "Green Valley Farm",
     location: "Davis, California",
@@ -11,7 +10,10 @@ export const farms: Farm[] = [
     attentionZones: 3,
     lastAnalysis: "22 min ago",
     zoneIds: ["Z01", "Z02", "Z03", "Z04", "Z05", "Z06", "Z07", "Z08", "Z09", "Z10", "Z11", "Z12"],
-  },
+  };
+
+export const farms: Farm[] = [
+  primaryFarm,
   {
     id: "north-meadow",
     name: "North Meadow Estate",
@@ -70,4 +72,18 @@ export const healthTrend = [
   { day: "Aug 25", value: 86 }, { day: "Aug 29", value: 84 },
 ];
 
-export const getZone = (id: string) => zones.find((zone) => zone.id === id) ?? zones[7];
+export const defaultZone: Zone = {
+  id: "Z08",
+  name: "West field",
+  status: "stress",
+  healthScore: 58,
+  ndvi: 0.42,
+  soilMoisture: 16,
+  waterStress: "High",
+  irrigationPriority: "high",
+  crop: "Winter wheat",
+  lastUpdated: "23 min ago",
+  recommendation: "Prioritize irrigation within the next cycle.",
+};
+
+export const getZone = (id: string): Zone => zones.find((zone) => zone.id === id) ?? defaultZone;

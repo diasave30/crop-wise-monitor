@@ -8,7 +8,7 @@ import { TrendChart } from "@/components/dashboard/trend-chart";
 import { AlertPanel } from "@/components/shared/alert-list";
 import { MetricCard } from "@/components/shared/metric-card";
 import { ZoneDetailPanel } from "@/components/shared/zone-detail-panel";
-import { getZone, recommendations, zones } from "@/data/mock-data";
+import { defaultZone, getZone, recommendations, zones } from "@/data/mock-data";
 import type { Zone } from "@/types/agriculture";
 import { Button } from "@/components/ui/button";
 
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
 });
 
 function DashboardPage() {
-  const [selected, setSelected] = useState<Zone>(getZone("Z08"));
+  const [selected, setSelected] = useState<Zone>(defaultZone);
   const [scheduled, setScheduled] = useState(false);
 
   return <AppShell title="Overview">
