@@ -1,0 +1,6 @@
+{
+  "name": "Ceres Intelligence",
+  "description": "Agricultural intelligence for crop health and irrigation decisions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -574,22 +574,21 @@ Create realistic mock data that can later be replaced with API responses.
 Example:
 
 {
-  farmId: "farm-001",
-  name: "Green Valley Farm",
-  cropType: "Wheat",
-  overallHealth: 72,
-  zones: [
-    {
-      id: "Z01",
-      healthScore: 88,
-      ndvi: 0.72,
-      soilMoisture: 62,
-      waterStress: "Low",
-      irrigationPriority: "Low"
-    }
-  ]
+farmId: "farm-001",
+name: "Green Valley Farm",
+cropType: "Wheat",
+overallHealth: 72,
+zones: [
+{
+id: "Z01",
+healthScore: 88,
+ndvi: 0.72,
+soilMoisture: 62,
+waterStress: "Low",
+irrigationPriority: "Low"
 }
-
+]
+}
 
 Keep all mock data separate from UI components.
 
@@ -613,10 +612,10 @@ Use a professional structure:
 
 src/
 ├── components/
-│   ├── layout/
-│   ├── dashboard/
-│   ├── farms/
-│   └── shared/
+│ ├── layout/
+│ ├── dashboard/
+│ ├── farms/
+│ └── shared/
 ├── pages/
 ├── services/
 ├── hooks/
@@ -624,7 +623,6 @@ src/
 ├── types/
 ├── utils/
 └── App.jsx
-
 
 Keep UI components, API services, and business logic separate.
 
@@ -663,8 +661,8 @@ Why did the system make that recommendation?
 
 Focus on clarity, operational usefulness, and professional visual design over visual decoration.
 
-here is the given inspo 
- frnotend in react not in tanstack
+here is the given inspo
+frnotend in react not in tanstack
 
 This project was built with [Lovable](https://lovable.dev).
 

@@ -1,4 +1,69 @@
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { healthTrend } from "@/data/mock-data";
+import { useEffect, useState } from "react";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { api } from "@/services/api";
 
-export function TrendChart({ compact = false }: { compact?: boolean }) { return <div className={compact ? "h-40" : "h-72"}><ResponsiveContainer width="100%" height="100%"><LineChart data={healthTrend} margin={{ top: 10, right: 8, left: -24, bottom: 0 }}><CartesianGrid stroke="var(--color-border)" vertical={false} /><XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: "var(--color-muted-foreground)", fontSize: 10 }} interval={compact ? 2 : 0} /><YAxis domain={[60, 100]} axisLine={false} tickLine={false} tick={{ fill: "var(--color-muted-foreground)", fontSize: 10 }} /><Tooltip contentStyle={{ border: "1px solid var(--color-border)", borderRadius: "6px", background: "var(--color-card)", fontSize: "12px" }} formatter={(value) => [`${value}%`, "Health score"]} /><Line type="monotone" dataKey="value" stroke="var(--color-primary)" strokeWidth={2.5} dot={{ r: 3, fill: "var(--color-primary)", strokeWidth: 0 }} activeDot={{ r: 5 }} /></LineChart></ResponsiveContainer></div>; }
+export function TrendChart({
+  compact = false,
+  data: propData,
+}: {
+  compact?: boolean;
+  data?: { day: string; value: number }[];
+}) {
+  const [trendData, setTrendData] = useState<{ day: string; value: number }[]>(propData ?? []);
+
+  useEffect(() => {
+    if (propData && propData.length > 0) {
+      setTrendData(propData);
+    } else {
+      api.getHealthTrends().then(setTrendData);
+    }
+  }, [propData]);
+
+  return (
+    <div className={compact ? "h-40" : "h-72"}>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={trendData} margin={{ top: 10, right: 8, left: -24, bottom: 0 }}>
+          <CartesianGrid stroke="var(--color-border)" vertical={false} />
+          <XAxis
+            dataKey="day"
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: "var(--color-muted-foreground)", fontSize: 10 }}
+            interval={compact ? 2 : 0}
+          />
+          <YAxis
+            domain={[60, 100]}
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: "var(--color-muted-foreground)", fontSize: 10 }}
+          />
+          <Tooltip
+            contentStyle={{
+              border: "1px solid var(--color-border)",
+              borderRadius: "6px",
+              background: "var(--color-card)",
+              fontSize: "12px",
+            }}
+            formatter={(value) => [`${value}%`, "Health score"]}
+          />
+          <Line
+            type="monotone"
+            dataKey="value"
+            stroke="var(--color-primary)"
+            strokeWidth={2.5}
+            dot={{ r: 3, fill: "var(--color-primary)", strokeWidth: 0 }}
+            activeDot={{ r: 5 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
